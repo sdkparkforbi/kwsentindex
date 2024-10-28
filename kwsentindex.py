@@ -88,7 +88,7 @@ plt.axhline(y=0.5, color='r', linestyle='--')
 plt.xlabel('연월', fontproperties=fontprop)
 plt.ylabel('감성지수', fontproperties=fontprop)
 plt.title(f"감성지수: '{keyword}'", fontproperties=fontprop)
-plt.legend(prop=font_path)
+plt.legend(prop=fontprop)
 plt.grid(True)
 
 # Streamlit에 그래프 표시
