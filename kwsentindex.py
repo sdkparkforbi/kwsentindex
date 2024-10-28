@@ -8,8 +8,8 @@ import os
 import sqlalchemy
 
 # GitHub 저장소에 업로드된 폰트 파일 경로 설정
-# font_path = os.path.join(os.path.dirname(__file__), 'NanumGothic.ttf')
-font_path = "C:/Windows/Fonts/NanumGothic.ttf"
+font_path = os.path.join(os.path.dirname(__file__), 'NanumGothic.ttf')
+# font_path = "C:/Windows/Fonts/NanumGothic.ttf"
 fontprop = fm.FontProperties(fname=font_path, size=10)
 plt.rcParams['font.family'] = fontprop.get_name()
 
