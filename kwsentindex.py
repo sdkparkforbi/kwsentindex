@@ -85,10 +85,10 @@ plt.plot(sentiment_trend1['year_month'], sentiment_trend1['index'], marker='o', 
 plt.plot(sentiment_trend1['year_month'], sentiment_trend1['6개월 이동평균'], color='blue', linestyle='-', linewidth=2,
          label='6개월 이동평균')
 plt.axhline(y=0.5, color='r', linestyle='--')
-plt.xlabel('연월')
-plt.ylabel('감성지수')
-plt.title(f"감성지수: '{keyword}'")
-plt.legend()
+plt.xlabel('연월', fontproperties=fontprop)
+plt.ylabel('감성지수', fontproperties=fontprop)
+plt.title(f"감성지수: '{keyword}'", fontproperties=fontprop)
+plt.legend(prop=font_path)
 plt.grid(True)
 
 # Streamlit에 그래프 표시
