@@ -26,7 +26,7 @@ st.title("키워드 기반 감성 지수 분석")
 st.write("기사 데이터를 사용하여 감성 지수 및 이동 평균을 시각화합니다.")
 
 # 사용자 입력 키워드 및 도시 선택
-keyword = st.text_input("분석할 키워드를 입력하세요:", value="반려동물")
+keyword = st.text_input("분석할 키워드를 입력하세요:", value="[미군*기지*반환]")
 cities = ['가평', '구리', '고양', '남양주', '동두천', '양주', '연천', '의정부', '파주', '포천']
 target_city = st.selectbox("분석할 도시를 선택하세요:", cities, index=cities.index('동두천'))
 
