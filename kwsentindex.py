@@ -6,6 +6,7 @@ import matplotlib.dates as mdates
 import matplotlib.font_manager as fm
 import os
 import sqlalchemy
+from matplotlib.gridspec import GridSpec
 
 # GitHub 저장소에 업로드된 폰트 파일 경로 설정
 font_path = os.path.join(os.path.dirname(__file__), 'NanumGothic.ttf')
@@ -79,10 +80,17 @@ sentiment_trend1 = sentiment_trend.reset_index()
 sentiment_trend1['year_month'] = sentiment_trend1['year_month'].dt.to_timestamp()
 sentiment_trend1['6개월 이동평균'] = sentiment_trend1['index'].rolling(window=6).mean()
 
-# 그래프 그리기
-fig = plt.figure(figsize=(12, 6))
-plt.plot(sentiment_trend1['year_month'], sentiment_trend1['index'], marker='o', color='g', label='감성지수')
-plt.plot(sentiment_trend1['year_month'], sentiment_trend1['6개월 이동평균'], color='blue', linestyle='-', linewidth=2,
+# 월별 빈도수 계산
+monthly_counts = filtered_data['year_month'].value_counts().sort_index()
+
+# 그래프 그리기 (GridSpec을 사용하여 서브플롯 배치)
+fig = plt.figure(figsize=(12, 8))
+gs = GridSpec(2, 1, height_ratios=[3, 1])  # 3:1 비율로 위쪽과 아래쪽 구분
+
+# 감성 지수와 이동 평균을 상단 플롯에 그림
+ax1 = fig.add_subplot(gs[0])
+ax1.plot(sentiment_trend1['year_month'], sentiment_trend1['index'], marker='o', color='g', label='감성지수')
+ax1.plot(sentiment_trend1['year_month'], sentiment_trend1['6개월 이동평균'], color='blue', linestyle='-', linewidth=2,
          label='6개월 이동평균')
 plt.axhline(y=0.5, color='r', linestyle='--')
 plt.xlabel('연월', fontproperties=fontprop)
@@ -90,6 +98,14 @@ plt.ylabel('감성지수', fontproperties=fontprop)
 plt.title(f"감성지수: '{keyword}'", fontproperties=fontprop)
 plt.legend(prop=fontprop)
 plt.grid(True)
+
+# 월별 빈도수를 하단 플롯에 막대그래프로 그림
+ax2 = fig.add_subplot(gs[1], sharex=ax1)
+ax2.bar(monthly_counts.index.to_timestamp(), monthly_counts.values, color='darkgray', alpha=0.8, width=20, align='center')
+ax2.set_ylabel('기사수', fontproperties=fontprop)
+ax2.set_xlabel('연월', fontproperties=fontprop)
+ax2.set_ylim(0, max(monthly_counts.values) * 1.2)  # 여백 조정
+ax2.grid(True)
 
 # Streamlit에 그래프 표시
 st.pyplot(fig)
